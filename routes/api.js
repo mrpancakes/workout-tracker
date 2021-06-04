@@ -6,9 +6,11 @@ const Workout = require('../models/Workout');
 router.post('/api/workouts', (req, res) => {
     Workout.create({})
     .then(workoutDB => {
+        console.log(workoutDB);
         res.json(workoutDB);
     })
     .catch(err => {
+        console.log(err)
         res.json(err);
     });
 });
@@ -16,8 +18,8 @@ router.post('/api/workouts', (req, res) => {
 // Update existing workout
 router.put('/api/workouts/:id', (req, res) => {
     Workout.findByIdAndUpdate(
-        params.id,
-        { $push: { exercise: body } },
+        req.params.id,
+        { $push: { exercise: req.body } },
         { new: true, runValidators: true }
     )
     .then(workoutDB => {
